@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Structural Engineering Guide</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <div class="cursor-follower"></div>
+
+    <header>
+      <div class="logo">
+        <svg width="50" height="50" viewBox="0 0 100 100">
+          <rect x="20" y="20" width="20" height="60" fill="#00a8ff" />
+          <rect x="60" y="20" width="20" height="60" fill="#00a8ff" />
+          <rect x="20" y="10" width="60" height="15" fill="#00a8ff" />
+        </svg>
+        <h1>Structural<span>Engineering</span></h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#columns">Columns</a></li>
+          <li><a href="#beams">Beams</a></li>
+          <li><a href="#3d-models">3D Models</a></li>
+          <li><a href="column_calculations.html">Column Calculations</a></li>
+          <li><a href="beam_calculations.html">Beam Calculations</a></li>
+          <li><a href="estimate.html">View Estimate</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="animated-text">Structural Elements</h1>
+        <p>Understanding the fundamental building blocks of construction</p>
+        <a href="#content" class="btn">Explore</a>
+      </div>
+      <div class="hero-3d" id="hero-3d-container"></div>
+    </section>
+
+    <section id="content" class="content-section">
+      <div class="section-header">
+        <h2>CONTENT</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="content-grid">
+        <div class="content-item" data-aos="fade-up">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24" class="check-icon">
+              <path
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+          </div>
+          <span>INTRODUCTION OF COLUMN</span>
+        </div>
+        <div class="content-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24" class="check-icon">
+              <path
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+          </div>
+          <span>TYPE OF COLUMN</span>
+        </div>
+        <div class="content-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24" class="check-icon">
+              <path
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+          </div>
+          <span>COLUMN DESIGN</span>
+        </div>
+        <div class="content-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24" class="check-icon">
+              <path
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+          </div>
+          <span>INTRODUCTION OF BEAM</span>
+        </div>
+        <div class="content-item" data-aos="fade-up" data-aos-delay="400">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24" class="check-icon">
+              <path
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+          </div>
+          <span>TYPE OF BEAM</span>
+        </div>
+        <div class="content-item" data-aos="fade-up" data-aos-delay="500">
+          <div class="checkbox">
+            <svg viewBox="0 0 24 24" class="check-icon">
+              <path
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+          </div>
+          <span>BEAM DESIGN</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="columns" class="section">
+      <div class="section-header">
+        <h2>COLUMN</h2>
+        <div class="underline"></div>
+      </div>
+
+      <div class="section-content">
+        <div class="text-content">
+          <h3>INTRODUCTION</h3>
+          <p>
+            A column is a vertical structural element that supports compressive
+            loads from beams and slabs and transfers them to the foundation. It
+            plays a crucial role in the stability of a structure.
+          </p>
+        </div>
+        <div class="image-content">
+          <img
+            src="Image/column.png"
+            alt="Column Introduction"
+            class="reveal-image"
+          />
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>TYPE OF COLUMN</h3>
+        <div class="subsection-content">
+          <div class="text-content">
+            <h4>BASED ON SHAPE</h4>
+            <ul class="feature-list">
+              <li><span class="highlight">Rectangular Column</span></li>
+              <li>Square Column</li>
+              <li>Circular Column</li>
+              <li>L-Shaped Column</li>
+              <li>T-Shaped Column</li>
+              <li>Hexagonal & Octagonal Column</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img
+              src="Image/types_of_column.png"
+              alt="Column Types by Shape"
+              class="reveal-image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection alt">
+        <div class="subsection-content">
+          <div class="image-content">
+            <img
+              src="Image/based_on_material.png"
+              alt="Column Types by Material"
+              class="reveal-image"
+            />
+          </div>
+          <div class="text-content">
+            <h4>BASED ON MATERIAL</h4>
+            <ul class="feature-list">
+              <li>
+                <span class="highlight"
+                  >Reinforced Concrete Column (RCC Column)</span
+                >
+                – Made of concrete with steel reinforcement, commonly used in
+                buildings.
+              </li>
+              <li>
+                Steel Column – Entirely made of steel, used in industrial
+                structures and high-rise buildings.
+              </li>
+              <li>
+                Timber Column – Made from wood, used in traditional and
+                temporary structures.
+              </li>
+              <li>
+                Brick Column – Constructed using bricks, used in old masonry
+                buildings.
+              </li>
+              <li>
+                Stone Column – Made from stones, found in ancient and historic
+                buildings.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-content">
+          <div class="text-content">
+            <h4>BASED ON REINFORCEMENT TYPE</h4>
+            <ul class="feature-list">
+              <li>
+                <span class="highlight">Tied Columns</span> – Contain lateral
+                ties to hold vertical reinforcement bars in place.
+              </li>
+              <li>
+                Spiral Columns – Have helical reinforcement for extra strength,
+                used in earthquake-prone areas.
+              </li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img
+              src="Image/based_on_reinforcement.png"
+              alt="Column Types by Reinforcement"
+              class="reveal-image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection alt">
+        <div class="subsection-content">
+          <div class="image-content">
+            <img
+              src="Image/rectangular.png"
+              alt="Rectangular Column"
+              class="reveal-image"
+            />
+          </div>
+          <div class="text-content">
+            <h4>RECTANGULAR COLUMN</h4>
+            <p>
+              A rectangular column is a vertical structural element with a
+              rectangular cross-section that primarily carries axial loads
+              (compression) and sometimes bending moments. It is commonly used
+              in buildings, bridges, and other structures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <h4>COLUMN CONSTRUCTION EXAMPLES</h4>
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <img
+              src="Image/column_constructuions_example.png"
+              alt="Column Construction Examples"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beams" class="section">
+      <div class="section-header">
+        <h2>BEAM</h2>
+        <div class="underline"></div>
+      </div>
+
+      <div class="section-content">
+        <div class="text-content">
+          <h3>INTRODUCTION</h3>
+          <p>
+            A beam is a horizontal structural element that carries and
+            distributes loads from slabs, roofs, or walls to columns and
+            foundations. It primarily resists bending and shear forces and
+            ensures the stability of a structure.
+          </p>
+        </div>
+        <div class="image-content">
+          <img
+            src="Image/beam.png"
+            alt="Beam Introduction"
+            class="reveal-image"
+          />
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>TYPE OF BEAM</h3>
+        <div class="subsection-content">
+          <div class="text-content">
+            <h4>DETERMINATE BEAM</h4>
+            <ul class="feature-list">
+              <li>CANTILEVER BEAM</li>
+              <li><span class="highlight">SIMPLY SUPPORTED BEAM</span></li>
+              <li>OVERHANGING BEAM</li>
+            </ul>
+            <h4>INDETERMINATE BEAM</h4>
+            <ul class="feature-list">
+              <li>CONTINUOUS BEAM</li>
+              <li>FIXED BEAM</li>
+              <li>PROPPED BEAM</li>
+            </ul>
+          </div>
+          <div class="image-content">
+            <img
+              src="Image/types_of_beam.png"
+              alt="Beam Types"
+              class="reveal-image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection alt">
+        <div class="subsection-content">
+          <div class="image-content">
+            <img
+              src="Image/simply_beam.png"
+              alt="Simply Supported Beam"
+              class="reveal-image"
+            />
+          </div>
+          <div class="text-content">
+            <h4>SIMPLY SUPPORTED BEAM</h4>
+            <p>
+              A Simply Supported Beam is a structural element that is supported
+              at both ends but is free to rotate and does not have any moment
+              resistance at the supports. One end typically has a pinned
+              support, which prevents horizontal and vertical movement but
+              allows rotation, while the other end has a roller support, which
+              allows horizontal movement and rotation but prevents vertical
+              movement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="3d-models" class="section">
+      <div class="section-header">
+        <h2>3D VISUALIZATION</h2>
+        <div class="underline"></div>
+      </div>
+
+      <div class="model-controls">
+        <button id="column-model" class="model-btn active">Column</button>
+        <button id="beam-model" class="model-btn">Beam</button>
+        <button id="structure-model" class="model-btn">Structure</button>
+      </div>
+
+      <div id="3d-container" class="model-container"></div>
+
+      <div class="model-info">
+        <h3>Interactive 3D Model</h3>
+        <p>
+          Drag to rotate, scroll to zoom, and use the buttons above to switch
+          between different structural elements.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <svg width="40" height="40" viewBox="0 0 100 100">
+            <rect x="20" y="20" width="20" height="60" fill="#00a8ff" />
+            <rect x="60" y="20" width="20" height="60" fill="#00a8ff" />
+            <rect x="20" y="10" width="60" height="15" fill="#00a8ff" />
+          </svg>
+          <h3>Structural<span>Engineering</span></h3>
+        </div>
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#columns">Columns</a></li>
+              <li><a href="#beams">Beams</a></li>
+              <li><a href="#3d-models">3D Models</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Structural Engineering Guide. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

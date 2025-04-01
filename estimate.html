@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beam and Column Estimate</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #00a8ff;
+            --primary-dark: #0097e6;
+            --secondary: #192a56;
+            --light: #f5f6fa;
+            --dark: #273c75;
+            --text: #2f3640;
+            --text-light: #7f8fa6;
+            --background: #ffffff;
+            --gray: #dcdde1;
+            --success: #4cd137;
+            --warning: #fbc531;
+            --danger: #e84118;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: var(--background);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .estimate-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .estimate-header {
+            color: var(--primary);
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .estimate-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .estimate-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .estimate-table tr:nth-child(even) {
+            background-color: rgba(0, 168, 255, 0.1);
+        }
+
+        .estimate-table tr:nth-child(odd) {
+            background-color: rgba(240, 240, 240, 0.5);
+        }
+
+        .estimate-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .estimate-table tr.total-row {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        .estimate-table tr.total-row td {
+            border-bottom: none;
+            font-size: 1.1rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .print-btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .button-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            .back-btn, .print-btn {
+                display: none;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            .estimate-section {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="index.html" class="back-btn">← Back to Main Page</a>
+        <button onclick="window.print()" class="print-btn">Print Estimate</button>
+    </div>
+    
+    <div class="estimate-section">
+        <h1 class="estimate-header">Estimate</h1>
+        
+        <table class="estimate-table">
+            <thead>
+                <tr>
+                    <th>SL.NO.</th>
+                    <th>FLOOR</th>
+                    <th>DESCRIPTION</th>
+                    <th>QUANTITY</th>
+                    <th>UNIT</th>
+                    <th>RATE</th>
+                    <th>AMOUNT(₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>GROUND</td>
+                    <td>COLUMN</td>
+                    <td>678.87</td>
+                    <td>sqm</td>
+                    <td>733.70</td>
+                    <td>498089.12</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>BEAM</td>
+                    <td>1410.08</td>
+                    <td>sqm</td>
+                    <td>552.05</td>
+                    <td>778436.71</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>FIRST</td>
+                    <td>COLUMN</td>
+                    <td>463.75</td>
+                    <td>sqm</td>
+                    <td>733.70</td>
+                    <td>340254.84</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>BEAM</td>
+                    <td>874.39</td>
+                    <td>sqm</td>
+                    <td>552.05</td>
+                    <td>482708.10</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>SECOND</td>
+                    <td>COLUMN</td>
+                    <td>474.55</td>
+                    <td>sqm</td>
+                    <td>733.70</td>
+                    <td>348178.80</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>BEAM</td>
+                    <td>874.39</td>
+                    <td>Sqm</td>
+                    <td>552.05</td>
+                    <td>482708.10</td>
+                </tr>
+                <tr class="total-row">
+                    <td>TOTAL</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>₹2930375.67</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Add animation for estimate section
+        const estimateSection = document.querySelector('.estimate-section');
+        
+        // Set initial styles
+        estimateSection.style.opacity = '0';
+        estimateSection.style.transform = 'translateY(30px)';
+        estimateSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        
+        // Animate on load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                estimateSection.style.opacity = '1';
+                estimateSection.style.transform = 'translateY(0)';
+            }, 100);
+        });
+        
+        // Add row highlighting on hover
+        const tableRows = document.querySelectorAll('.estimate-table tbody tr:not(.total-row)');
+        tableRows.forEach(row => {
+            row.addEventListener('mouseover', function() {
+                this.style.backgroundColor = 'rgba(0, 168, 255, 0.2)';
+            });
+            
+            row.addEventListener('mouseout', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body>
+</html>

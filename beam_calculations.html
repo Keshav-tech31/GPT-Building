@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beam Design Calculations</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #00a8ff;
+            --primary-dark: #0097e6;
+            --secondary: #192a56;
+            --light: #f5f6fa;
+            --dark: #273c75;
+            --text: #2f3640;
+            --text-light: #7f8fa6;
+            --background: #ffffff;
+            --gray: #dcdde1;
+            --success: #4cd137;
+            --warning: #fbc531;
+            --danger: #e84118;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: var(--background);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .calculation-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .calculation-header {
+            color: var(--primary);
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .calculation-subheader {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .calculation-step {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .calculation-step::before {
+            content: '□';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .calculation-result {
+            font-weight: 600;
+            margin-top: 10px;
+            color: var(--secondary);
+        }
+
+        .highlight {
+            background-color: rgba(0, 168, 255, 0.15);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .code-reference {
+            background-color: #00d2d3;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 500;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .final-result {
+            font-weight: 700;
+            color: var(--secondary);
+            border-top: 2px solid var(--primary);
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+
+        .kn {
+            color: #e84118;
+            font-weight: 700;
+        }
+
+        .calculation-formula {
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calculation-note {
+            font-style: italic;
+            color: var(--text-light);
+            margin: 5px 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .beam-types {
+            margin: 15px 0;
+        }
+
+        .beam-type {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .beam-type::before {
+            content: '➤';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-size: 1rem;
+        }
+
+        .check-icon {
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .total-load {
+            margin: 20px 0;
+        }
+
+        .total-load-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Main Page</a>
+    
+    <div class="calculation-section">
+        <h1 class="calculation-header">BEAM DESIGN DETAILS</h1>
+        
+        <h3>Given Data:</h3>
+        <ul>
+            <li>Number of Floors: 3</li>
+            <li>Concrete Density: 25 kN/m³ <span class="code-reference">IS CODE 475:2000</span></li>
+            <li>Wall Load: 4.389 kN/m³</li>
+            <li>Slab Load: 27.75 kN/m³</li>
+            <li>Live Load: 9 kN/m³</li>
+        </ul>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Beam Types and Sizes:</h3>
+            
+            <div class="beam-types">
+                <div class="beam-type">
+                    Grade Beam: 230 mm × 450 mm = 0.23 m × 0.45 m
+                </div>
+                <div class="beam-type">
+                    SLAB Beam (B1): 600 mm × 300 mm = 0.60 m × 0.30 m
+                </div>
+                <div class="beam-type">
+                    Beam (B2): 350 mm × 300 mm = 0.35 m × 0.30 m
+                </div>
+                <div class="beam-type">
+                    Beam (B3): 230 mm × 300 mm = 0.23 m × 0.30 m
+                </div>
+                <div class="beam-type">
+                    L-Beam: 300 mm × 450 mm = 0.30 m × 0.45 m
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="calculation-section">
+        <h1 class="calculation-header">SELF-WEIGHT OF BEAMS</h1>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Self-weight Calculation:</h3>
+            <div class="calculation-formula">
+                {Self-weight} = Width × Depth × Density of Concrete
+            </div>
+            
+            <div class="beam-types">
+                <div class="beam-type">
+                    (a) Grade Beam: 0.23 × 0.45 × 25 = 2.5875 kN/m
+                </div>
+                <div class="beam-type">
+                    (b) Slab Beam (B1): 0.60 × 0.30 × 25 = 4.5 kN/m
+                </div>
+                <div class="beam-type">
+                    (c) Slab Beam (B2): 0.35 × 0.30 × 25 = 2.625 kN/m
+                </div>
+                <div class="beam-type">
+                    (d) Slab Beam (B3): 0.23 × 0.30 × 25 = 1.725 kN/m
+                </div>
+                <div class="beam-type">
+                    (e) L-Beam: 0.30 × 0.45 × 25 = 3.375 kN/m
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="calculation-section">
+        <h1 class="calculation-header">TOTAL LOAD ON EACH BEAM</h1>
+        
+        <div class="calculation-step">
+            <div class="total-load">
+                <div class="total-load-item">
+                    (a) Grade Beam: 2.5875 + 4.389 + 27.75 + 9 = 43.7265 <span class="kn">kN/m</span>
+                </div>
+                <div class="total-load-item">
+                    (b) Slab Beam (B1): 4.5 + 4.389 + 27.75 + 9 = 45.639 <span class="kn">kN/m</span>
+                </div>
+                <div class="total-load-item">
+                    (c) Slab Beam (B2): 2.625 + 4.389 + 27.75 + 9 = 43.764 <span class="kn">kN/m</span>
+                </div>
+                <div class="total-load-item">
+                    (d) Slab Beam (B3): 1.725 + 4.389 + 27.75 + 9 = 42.864 <span class="kn">kN/m</span>
+                </div>
+                <div class="total-load-item">
+                    (e) L-Beam: 3.375 + 4.389 + 27.75 + 9 = 44.514 <span class="kn">kN/m</span>
+                </div>
+            </div>
+            
+            <h3 class="calculation-subheader">Final Load on a Single Beam:</h3>
+            <div class="calculation-note">
+                Conclusion:
+            </div>
+            <div class="calculation-formula">
+                The load on a single beam depends on the type of beam, with the maximum load acting on Slab Beam (B1) = 45.64 kN/m.
+            </div>
+            <div class="calculation-formula">
+                Grade beams and L-beams also experience significant load due to wall and slab load transfer.
+            </div>
+        </div>
+    </div>
+    
+    <div class="calculation-section">
+        <h1 class="calculation-header">MATERIAL USED IN BEAM</h1>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Given Data:</h3>
+            <ul>
+                <li>Beam Size = 600mm × 300mm</li>
+                <li>Concrete Density = 25 kN/m³</li>
+                <li>Wall Load = 4.389 kN/m</li>
+                <li>Slab Load = 27.75 kN/m</li>
+                <li>Live Load = 9 kN/m</li>
+                <li>Concrete Grade = M25 (fck = 25 MPa)</li>
+                <li>Steel Grade = Fe500 (fy = 500 MPa)</li>
+                <li>Self-Weight of Beam = (0.6 × 0.3 × 25) = 4.5 kN/m</li>
+                <li>Total Load (w) = 4.5 + 4.389 + 27.75 + 9 = 45.639 kN/m</li>
+            </ul>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Bending Moment Calculation (For 1m Length)</h3>
+            <div class="calculation-formula">
+                For a simply supported beam, bending moment is:
+            </div>
+            <div class="calculation-formula">
+                M = wL²/8
+            </div>
+            <div class="calculation-formula">
+                M = (45.639 × 6²)/8 kN/m
+            </div>
+            <div class="calculation-formula">
+                For 1 meter length, approximate bending moment:
+            </div>
+            <div class="calculation-formula">
+                M(1m) = 34.23 kN/m
+            </div>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Main Reinforcement Calculation</h3>
+            <div class="calculation-formula">
+                Formula for required steel area (Ast):
+            </div>
+            <div class="calculation-formula">
+                Ast = (M)/{0.87fy × d ×(1-fck/fy × d'/d)}
+            </div>
+            <div class="calculation-note">
+                Assumptions:
+            </div>
+            <ul>
+                <li>Effective Depth (d) = 600 - 50 (cover) - 16/2 (bar dia) = 542 mm</li>
+                <li>d'(Compression steel cover) = 50mm</li>
+            </ul>
+            <div class="calculation-formula">
+                Ast = 34.23×10^6/0.87×500×542×{(1-25/500) ×(50/542)}
+            </div>
+            <div class="calculation-formula">
+                Ast ≈ 260mm²
+            </div>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Number of Bars Per Meter</h3>
+            <div class="calculation-formula">
+                16 bars (201 mm² each) use:
+            </div>
+            <div class="calculation-formula">
+                260/201 ≈ 1.3 bars/meter
+            </div>
+            <div class="calculation-formula">
+                12 bars (113 mm² each) use:
+            </div>
+            <div class="calculation-formula">
+                260/113 ≈ 2.3 bars/meter
+            </div>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Shear Reinforcement (Stirrups)</h3>
+            <ul>
+                <li>Assume 8mm dia stirrups @150mm c/c</li>
+                <li>1 meter (1000/150) = 6-7 stirrups</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="calculation-section">
+        <h1 class="calculation-header">CONCRETE QUANTITY FOR BEAM</h1>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Given Data:</h3>
+            <ul>
+                <li>Beam Size = 600mm × 300mm</li>
+                <li>Beam Length (L) = 1 meter</li>
+            </ul>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Volume of Concrete in 1m Length</h3>
+            <div class="calculation-formula">
+                Concrete volume formula:
+            </div>
+            <div class="calculation-formula">
+                Volume = width × depth × length
+            </div>
+            <div class="calculation-formula">
+                = 0.6m × 0.3m × 1m
+            </div>
+            <div class="calculation-formula">
+                = 0.18m³
+            </div>
+            <div class="calculation-note">
+                So, concrete required per 1-meter length of beam = 0.18 cubic meters.
+            </div>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Concrete Weight Calculation</h3>
+            <ul>
+                <li>Density = 25 kN/m³</li>
+                <li>Weight of concrete per meter:</li>
+            </ul>
+            <div class="calculation-formula">
+                Weight = Volume × Density = 0.18 × 25 = 4.5 kN
+            </div>
+        </div>
+        
+        <div class="calculation-step">
+            <h3 class="calculation-subheader">Final Answer:</h3>
+            <div class="final-result">
+                <div class="check-icon">✓</div> Concrete Volume per 1m Beam = 0.18 m³
+            </div>
+            <div class="final-result">
+                <div class="check-icon">✓</div> Concrete Weight per 1m Beam = 4.5 kN
+            </div>
+        </div>
+    </div>
+    
+    <div class="calculation-section">
+        <h1 class="calculation-header">FINAL ANSWER (PER 1 METER BEAM LENGTH)</h1>
+        
+        <div class="calculation-step">
+            <div class="final-result">
+                <div class="check-icon">✓</div> Main Reinforcement: 16 or 12 bars per meter
+            </div>
+            <div class="final-result">
+                <div class="check-icon">✓</div> Shear Reinforcement: 8mm stirrups @ 150mm c/c (6-7 stirrups per meter)
+            </div>
+            <div class="final-result">
+                <div class="check-icon">✓</div> Concrete Volume per 1m Beam = 0.18 m³
+            </div>
+            <div class="final-result">
+                <div class="check-icon">✓</div> Concrete Weight per 1m Beam = 4.5 kN
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add animation for calculation sections
+        const calculationSections = document.querySelectorAll('.calculation-section');
+        
+        function checkScroll() {
+            calculationSections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight - 100) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial styles
+        calculationSections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        });
+        
+        // Check on load and scroll
+        window.addEventListener('load', checkScroll);
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>
